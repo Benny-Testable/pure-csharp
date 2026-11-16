@@ -58,5 +58,5 @@ defects already on record -- see `tools/roslyn-dataflow/` for the proposed
 real repair (Roslyn's `SemanticModel.AnalyzeDataFlow`), which is a separate,
 still-open defect.
 
-`run.sh` now exits **0** and produces real output, for the 18 metrics this
+The runner now exits **0** and produces real output, for the 18 metrics this
 tool actually supports.

@@ -2,7 +2,7 @@
 
 ## What is planted here
 
-One method per rule in this folder's rules.yml.
+One method per rule in the Semgrep C# rule set.
 
 ## What a correct run should measure
 
