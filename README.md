@@ -73,12 +73,12 @@ never ran" - so the source-level tools below are the built-in negative control:
 | Roslyn analyzers (cognitive complexity) | not-installed | The sheet says 'Roslyn', which is a compiler platform, not a package. Resolved here to S |
 | Roslyn SAST analyzers | not-installed | The sheet says 'roslyn sast', also not a package. Resolved here to SecurityCodeScan + Mi |
 | Roslyn SemanticModel.AnalyzeDataFlow | not-installed | PROPOSED REPAIR, not in the source sheet. The sheet assigns Data Flow to Stryker.NET, a  |
-| dotnet list package --vulnerable | skipped | Requires PackageReference and an SDK-style project. Structurally impossible on the packa |
-| Coverlet | not-installed | STATUS CHANGED AT THIS FAMILY. net45 and net46 sat below netstandard2.0, whose .NET Fram |
-| AltCover | not-installed | Declares .NET Framework 2.0+ via a net20 recorder, so it is the one coverage tool in the |
-| MiniCover | skipped | MiniCover 3.10.0 declares .NET SDK 8.0/9.0/10.0 only -- verified against its own MiniCov |
-| Stryker.NET | skipped | Requires an SDK-style project and a modern SDK to run. Also: the sheet makes it primary  |
-| OpenTelemetry (.NET) + OTLP exporter | not-installed | STATUS CHANGED AT THIS FAMILY, for the same reason as Coverlet: netstandard2.0 clears at |
+| dotnet list package --vulnerable | not-installed | This branch is SDK-style with PackageReference under Central Package Management, so `dot |
+| Coverlet | skipped | net8.0 is fully supported; nothing about this target framework excludes Coverlet. It ins |
+| AltCover | skipped | net8.0 is supported. AltCover rewrites compiled assemblies to record visits, and OrderKi |
+| MiniCover | skipped | MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0), so th |
+| Stryker.NET | skipped | Stryker.NET supports this SDK-style net8.0 solution. It mutates and rebuilds the code un |
+| OpenTelemetry (.NET) + OTLP exporter | skipped | net8.0 is supported. Spans come from a running, compiled app with the OpenTelemetry SDK  |
 | unilyze | active | Real tool (github.com/bigdra50/unilyze, MIT, v0.6.1) -- not absent. Verified: live cyclomatic/cognitive comp |
 ## Build
 

@@ -2,13 +2,13 @@
   "tool": "dotnet list package --vulnerable",
   "slug": "nuget-audit",
   "kind": "sdk",
-  "status": "skipped",
+  "status": "not-installed",
   "target_framework": "net8.0",
   "language_version": "12.0",
   "runner": "ToolRunner/Tools/NugetAudit.cs",
   "expects": {
-    "exit_code": 3,
-    "reason": "Requires PackageReference and an SDK-style project. Structurally impossible on the packages.config cells, and requires a restore this host cannot perform."
+    "exit_code": 4,
+    "reason": "This branch is SDK-style with PackageReference under Central Package Management, so `dotnet list package --vulnerable` applies. It needs a restore and live advisory data from NuGet, which this host's egress proxy refuses. Where NuGet is reachable it runs and reports the planted pins."
   },
   "metrics": {
     "primary_for": 8,

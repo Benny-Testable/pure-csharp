@@ -2,13 +2,13 @@
   "tool": "OpenTelemetry (.NET) + OTLP exporter",
   "slug": "opentelemetry",
   "kind": "sdk",
-  "status": "not-installed",
+  "status": "skipped",
   "target_framework": "net8.0",
   "language_version": "12.0",
   "runner": "ToolRunner/Tools/OpenTelemetry.cs",
   "expects": {
-    "exit_code": 4,
-    "reason": "STATUS CHANGED AT THIS FAMILY, for the same reason as Coverlet: netstandard2.0 clears at net461, so the target framework no longer excludes it and only NuGet does. Note separately that tracing is not path coverage. The TypeScript corpus shipped an OTel bootstrap that registered a no-op processor, exported nothing and exited 0 -- a structurally zero result."
+    "exit_code": 3,
+    "reason": "net8.0 is supported. Spans come from a running, compiled app with the OpenTelemetry SDK wired in, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist. No project references OpenTelemetry either. Note separately that tracing is not path coverage. The TypeScript corpus shipped an OTel bootstrap that registered a no-op processor, exported nothing and exited 0 -- a structurally zero result."
   },
   "metrics": {
     "primary_for": 1,

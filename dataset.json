@@ -154,25 +154,25 @@
       "tool": "dotnet list package --vulnerable",
       "slug": "nuget-audit",
       "kind": "sdk",
-      "status": "skipped",
-      "expectedExitCode": 3,
-      "reason": "Requires PackageReference and an SDK-style project. Structurally impossible on the packages.config cells, and requires a restore this host cannot perform."
+      "status": "not-installed",
+      "expectedExitCode": 4,
+      "reason": "This branch is SDK-style with PackageReference under Central Package Management, so `dotnet list package --vulnerable` applies. It needs a restore and live advisory data from NuGet, which this host's egress proxy refuses. Where NuGet is reachable it runs and reports the planted pins."
     },
     {
       "tool": "Coverlet",
       "slug": "coverlet",
       "kind": "sdk",
-      "status": "not-installed",
-      "expectedExitCode": 4,
-      "reason": "STATUS CHANGED AT THIS FAMILY. net45 and net46 sat below netstandard2.0, whose .NET Framework floor is net461, so Coverlet was excluded by the TARGET FRAMEWORK and exited 3. This family is above that floor: nothing about net462 excludes Coverlet. It is now held out only by NuGet being refused at this host's egress proxy, which is a setup gap -- exit 4. The 18 metrics it is primary for (statement 5, branch 7, delta 6) are dark for a completely different reason than they were one family ago, and collapsing 3 and 4 would hide that."
+      "status": "skipped",
+      "expectedExitCode": 3,
+      "reason": "net8.0 is fully supported; nothing about this target framework excludes Coverlet. It instruments the compiled test assemblies, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist."
     },
     {
       "tool": "AltCover",
       "slug": "altcover",
       "kind": "sdk",
-      "status": "not-installed",
-      "expectedExitCode": 4,
-      "reason": "Declares .NET Framework 2.0+ via a net20 recorder, so it is the one coverage tool in the roster that could reach this family. Blocked only by NuGet."
+      "status": "skipped",
+      "expectedExitCode": 3,
+      "reason": "net8.0 is supported. AltCover rewrites compiled assemblies to record visits, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist."
     },
     {
       "tool": "MiniCover",
@@ -180,7 +180,7 @@
       "kind": "sdk",
       "status": "skipped",
       "expectedExitCode": 3,
-      "reason": "MiniCover 3.10.0 declares .NET SDK 8.0/9.0/10.0 only -- verified against its own MiniCover.csproj (<TargetFrameworks>net10.0;net9.0;net8.0</TargetFrameworks>). It is the alternative for 22 metrics and cannot reach any .NET Framework target."
+      "reason": "MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0), so the target framework does not exclude it. It instruments a build and runs the test suite, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist."
     },
     {
       "tool": "Stryker.NET",
@@ -188,15 +188,15 @@
       "kind": "sdk",
       "status": "skipped",
       "expectedExitCode": 3,
-      "reason": "Requires an SDK-style project and a modern SDK to run. Also: the sheet makes it primary for 16 Data Flow metrics, which it cannot compute -- see roslyn-dataflow."
+      "reason": "Stryker.NET supports this SDK-style net8.0 solution. It mutates and rebuilds the code under test and runs the test project, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist. Also: the sheet makes it primary for 16 Data Flow metrics, which it cannot compute -- see roslyn-dataflow."
     },
     {
       "tool": "OpenTelemetry (.NET) + OTLP exporter",
       "slug": "opentelemetry",
       "kind": "sdk",
-      "status": "not-installed",
-      "expectedExitCode": 4,
-      "reason": "STATUS CHANGED AT THIS FAMILY, for the same reason as Coverlet: netstandard2.0 clears at net461, so the target framework no longer excludes it and only NuGet does. Note separately that tracing is not path coverage. The TypeScript corpus shipped an OTel bootstrap that registered a no-op processor, exported nothing and exited 0 -- a structurally zero result."
+      "status": "skipped",
+      "expectedExitCode": 3,
+      "reason": "net8.0 is supported. Spans come from a running, compiled app with the OpenTelemetry SDK wired in, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist. No project references OpenTelemetry either. Note separately that tracing is not path coverage. The TypeScript corpus shipped an OTel bootstrap that registered a no-op processor, exported nothing and exited 0 -- a structurally zero result."
     },
     {
       "tool": "unilyze",
