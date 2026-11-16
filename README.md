@@ -78,7 +78,7 @@ never ran" - so the source-level tools below are the built-in negative control:
 | unilyze | active | Real tool (github.com/bigdra50/unilyze, MIT, v0.6.1) -- not absent. Verified: live cyclomatic/cognitive comp |
 ## Build
 
-```bash
+```text
 msbuild OrderKit.sln /t:Restore
 msbuild OrderKit.sln /t:Build /p:Configuration=Release
 ```
@@ -88,7 +88,7 @@ Restore will not succeed on a host where NuGet is unreachable; see `dataset.json
 
 ## Test
 
-```bash
+```text
 msbuild OrderKit.sln /t:Build /p:Configuration=Release   # the test step is wired into the build
 ```
 
@@ -114,7 +114,7 @@ The harness is the C# console project `ToolRunner/` (one runner per tool under
 `ToolRunner/Tools/`). It is kept out of `OrderKit.sln` and out of the tool data
 folder, so it is neither built with the corpus nor detected as part of it.
 
-```bash
+```text
 dotnet run --project ToolRunner                     # banner
 dotnet run --project ToolRunner -- --verify         # every runner present
 dotnet run --project ToolRunner -- --run            # run them all, compare to dataset.json

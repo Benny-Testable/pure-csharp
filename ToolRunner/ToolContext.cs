@@ -73,18 +73,6 @@ public sealed class ToolContext
         }
     }
 
-    /// <summary>Probes a Python module and returns the interpreter that imports it.</summary>
-    public string RequirePythonModule(string module)
-    {
-        var python = FindOnPath("python3") ?? FindOnPath("python");
-        if (python is null || Run(python, ["-c", "import " + module], Sink.Discard) != 0)
-        {
-            Missing("python module '" + module + "' not importable");
-        }
-
-        return python;
-    }
-
     /// <summary>Every NuGet-backed tool needs this, and none of them have it.</summary>
     public void RequireRestore()
     {
