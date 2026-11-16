@@ -285,6 +285,13 @@ public static partial class FullCheck
 
                 foreach (var dir in Directory.EnumerateDirectories(bas, "*", SearchOption.AllDirectories).Prepend(bas))
                 {
+                    // bin/ and obj/ are git-ignored build output, not shipped content.
+                    var rel = Path.GetRelativePath(bas, dir).Split(Path.DirectorySeparatorChar);
+                    if (rel.Any(s => s is "bin" or "obj"))
+                    {
+                        continue;
+                    }
+
                     if (!Directory.EnumerateFileSystemEntries(dir).Any())
                     {
                         Fail("empty", "empty directory " + paths.Rel(dir));
