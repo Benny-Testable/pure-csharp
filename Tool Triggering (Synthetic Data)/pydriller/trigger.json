@@ -8,7 +8,7 @@
   "runner": "ToolRunner/Tools/PyDriller.cs",
   "expects": {
     "exit_code": 0,
-    "reason": "Python, reads git only. Class C: never touches the source language."
+    "reason": "Reads git only. Class C: never touches the source language."
   },
   "metrics": {
     "primary_for": 5,
