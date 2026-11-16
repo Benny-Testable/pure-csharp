@@ -42,8 +42,8 @@ csc -langversion:4   ->  error CS8025: Feature 'async function' is not available
 ## Supported tools
 
 6 of the 19 tools in the roster are expected to fire on this branch. The rest exit
-3 (cannot run here) or 4 (absent from this host), each with its reason in both
-`run.sh` and `trigger.yaml`.
+3 (cannot run here) or 4 (absent from this host), each with its reason recorded in
+`dataset.json`.
 
 **A tool that does not fire is a result, not a failure.** What a family with *no*
 firing tools cannot do is distinguish "correctly detected nothing" from "the scan
@@ -79,7 +79,8 @@ never ran" - so the source-level tools below are the built-in negative control:
 ## Build
 
 ```bash
-./build.sh
+msbuild OrderKit.sln /t:Restore
+msbuild OrderKit.sln /t:Build /p:Configuration=Release
 ```
 
 Restore will not succeed on a host where NuGet is unreachable; see `dataset.json`
@@ -88,7 +89,7 @@ Restore will not succeed on a host where NuGet is unreachable; see `dataset.json
 ## Test
 
 ```bash
-./build.sh          # the test step is wired into the build
+msbuild OrderKit.sln /t:Build /p:Configuration=Release   # the test step is wired into the build
 ```
 
 19 tests are declared. They are **not** executed in this corpus's build, because no
@@ -107,20 +108,9 @@ manifest** -- no `.csproj`, `.sln`, `packages.config` or lockfile. One there
 would make the platform treat the folder as a project of its own and run the
 whole roster against it.
 
-## Tool entry points
-
-```bash
-python3 "Tool Triggering (Synthetic Data)/tool_integration.py"            # banner
-python3 "Tool Triggering (Synthetic Data)/tool_integration.py" --verify   # every runner present and executable
-python3 "Tool Triggering (Synthetic Data)/tool_integration.py" --run      # run them all, compare to dataset.json
-python3 "Tool Triggering (Synthetic Data)/full_check.py"                  # cross-file consistency audit
-```
-
 ## What is expected to fire
 
 `dataset.json` asserts the answer rather than describing it, so a platform that
 reports nothing for a given tool can be *proven* correct instead of assumed correct.
-Every runner's expected exit code is recorded there, and
-`tool_integration.py --run` exits **2** if any tool produces a result the dataset
-does not already record - a new finding, as distinct from a measurement.
+Every runner's expected exit code is recorded there.
 

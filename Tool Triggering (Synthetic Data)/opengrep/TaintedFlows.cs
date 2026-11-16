@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace OrderKit.ToolData.Opengrep
 {
 
-    /// <summary>One method per rule in this folder's rules.yml, written to the exact
+    /// <summary>One method per rule in the Semgrep C# rule set, written to the exact
     /// shape each pattern matches:
     ///
     ///   orderkit-tainted-query    string.Format("SELECT ...", ...)
