@@ -8,7 +8,7 @@ namespace OrderKit
     /// The family's parse-time language lock. async/await is C# 5; one language
     /// version below, csc reports:
     ///   error CS8025: Feature 'async function' is not available in C# 4.
-    /// Verified by execution, not asserted -- see dataset.json.
+    /// Verified by execution, not asserted -- see ToolRunner/FullCheck.cs.
     /// </summary>
     public sealed class AsyncPricingGateway
     {
