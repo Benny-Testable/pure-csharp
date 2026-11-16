@@ -42,8 +42,8 @@ csc -langversion:4   ->  error CS8025: Feature 'async function' is not available
 ## Supported tools
 
 6 of the 19 tools in the roster are expected to fire on this branch. The rest exit
-3 (cannot run here) or 4 (absent from this host), each with its reason recorded in
-`dataset.json`.
+3 (cannot run here) or 4 (absent from this host), each with its reason in both
+its runner (`ToolRunner/Tools/`) and `trigger.json`.
 
 **A tool that does not fire is a result, not a failure.** What a family with *no*
 firing tools cannot do is distinguish "correctly detected nothing" from "the scan
@@ -108,9 +108,25 @@ manifest** -- no `.csproj`, `.sln`, `packages.config` or lockfile. One there
 would make the platform treat the folder as a project of its own and run the
 whole roster against it.
 
+## Tool entry points
+
+The harness is the C# console project `ToolRunner/` (one runner per tool under
+`ToolRunner/Tools/`). It is kept out of `OrderKit.sln` and out of the tool data
+folder, so it is neither built with the corpus nor detected as part of it.
+
+```bash
+dotnet run --project ToolRunner                     # banner
+dotnet run --project ToolRunner -- --verify         # every runner present
+dotnet run --project ToolRunner -- --run            # run them all, compare to dataset.json
+dotnet run --project ToolRunner -- --check          # cross-file consistency audit
+dotnet run --project ToolRunner -- --tool semgrep   # one tool's runner
+```
+
 ## What is expected to fire
 
 `dataset.json` asserts the answer rather than describing it, so a platform that
 reports nothing for a given tool can be *proven* correct instead of assumed correct.
-Every runner's expected exit code is recorded there.
+Every runner's expected exit code is recorded there, and
+`ToolRunner --run` exits **2** if any tool produces a result the dataset
+does not already record - a new finding, as distinct from a measurement.
 

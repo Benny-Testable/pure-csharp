@@ -1,6 +1,6 @@
 // Tool Triggering (Synthetic Data) -- Semgrep
 //
-// PLANTED: one method per rule in the Semgrep C# rule set
+// PLANTED: one method per rule in this folder's rules.json
 // EXPECTED: all 3 rules fire (orderkit-tainted-query, -command, -path); 5 findings in total, because -command matches once per Append
 //
 // Family net45, C# 5. The core below is C# 5-compatible so it is identical on
@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 namespace OrderKit.ToolData.Semgrep
 {
 
-    /// <summary>One method per rule in the Semgrep C# rule set, written to the exact
+    /// <summary>One method per rule in this folder's rules.json, written to the exact
     /// shape each pattern matches:
     ///
     ///   orderkit-tainted-query    string.Format("SELECT ...", ...)
