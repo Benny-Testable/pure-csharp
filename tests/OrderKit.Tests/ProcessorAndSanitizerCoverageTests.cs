@@ -59,6 +59,17 @@ namespace OrderKit.Tests
         }
 
         [Test]
+        public void NegativeCeilingThrowsButZeroIsAllowed()
+        {
+            foreach (Processor p in Both())
+            {
+                Assert.Throws<ArgumentOutOfRangeException>(() => p.Process(new List<Order>(), -1L));
+                p.Process(new[] { Priced("FREE", 0L) }, 0L);   // == 0 boundary is a valid ceiling
+                Assert.AreEqual(1, p.Accepted());
+            }
+        }
+
+        [Test]
         public void EveryRoutingOutcome()
         {
             foreach (Processor p in Both())

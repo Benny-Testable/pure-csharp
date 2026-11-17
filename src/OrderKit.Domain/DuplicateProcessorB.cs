@@ -23,6 +23,7 @@ namespace OrderKit
         public void Process(IEnumerable<Order> orders, long ceilingCents)
         {
             if (orders == null) throw new ArgumentNullException("orders");
+            if (ceilingCents < 0) throw new ArgumentOutOfRangeException("ceilingCents");
             foreach (Order order in orders)
             {
                 if (order == null) continue;
