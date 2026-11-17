@@ -151,6 +151,14 @@ namespace OrderKit.Tests
         }
 
         [Test]
+        public void NullBatchThrowsArgumentNull()
+        {
+            AsyncPricingGateway gw = new AsyncPricingGateway(_svc);
+            ArgumentNullException ex = Assert.ThrowsAsync<ArgumentNullException>(() => gw.PriceBatchAsync(null, "domestic"));
+            Assert.AreEqual("orders", ex.ParamName);
+        }
+
+        [Test]
         public void BatchOfZeroOrdersIsZero()
         {
             AsyncPricingGateway gw = new AsyncPricingGateway(_svc);

@@ -28,6 +28,7 @@ namespace OrderKit
 
         public async Task<long> PriceBatchAsync(IEnumerable<Order> orders, string region)
         {
+            if (orders == null) throw new ArgumentNullException(nameof(orders));
             long total = 0;
             foreach (Order order in orders)
             {
