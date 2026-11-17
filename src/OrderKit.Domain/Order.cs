@@ -72,7 +72,7 @@ public sealed class Order : IPriceable
     /// and the spread splices an existing sequence in.</summary>
     public IReadOnlyList<string> Tags(params string[] extra)
     {
-        string[] tags = [CustomerTier, Status.Label(), .. extra];
+        string[] tags = [CustomerTier, Status.Label(), .. extra ?? []];
         return tags;
     }
 

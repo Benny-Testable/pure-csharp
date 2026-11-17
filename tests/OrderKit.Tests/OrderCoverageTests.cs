@@ -84,6 +84,7 @@ namespace OrderKit.Tests
             Order o = Lines(1);
             CollectionAssert.AreEqual(new[] { "gold", "draft" }, o.Tags());
             CollectionAssert.AreEqual(new[] { "gold", "draft", "x", "y" }, o.Tags("x", "y"));
+            CollectionAssert.AreEqual(new[] { "gold", "draft" }, o.Tags(null));
         }
 
         [Test]
