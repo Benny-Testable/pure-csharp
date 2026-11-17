@@ -18,11 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OrderKit.Domain\OrderKit.Domain.csproj" />
-    <ProjectReference Include="..\..\OrderKit.Contracts\OrderKit.Contracts.csproj" />
-    <ProjectReference Include="..\..\OrderKit.Pricing\OrderKit.Pricing.csproj" />
-    <ProjectReference Include="..\..\OrderKit.Risk\OrderKit.Risk.csproj" />
-    <ProjectReference Include="..\..\OrderKit.Reporting\OrderKit.Reporting.csproj" />
+    <ProjectReference Include="..\..\src\OrderKit.Domain\OrderKit.Domain.csproj" />
+    <ProjectReference Include="..\..\src\OrderKit.Contracts\OrderKit.Contracts.csproj" />
+    <ProjectReference Include="..\..\src\Services\OrderKit.Pricing\OrderKit.Pricing.csproj" />
+    <ProjectReference Include="..\..\src\Services\OrderKit.Risk\OrderKit.Risk.csproj" />
+    <ProjectReference Include="..\..\src\Services\OrderKit.Reporting\OrderKit.Reporting.csproj" />
   </ItemGroup>
 
 </Project>

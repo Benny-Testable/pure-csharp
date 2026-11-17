@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OrderKit.Domain\OrderKit.Domain.csproj" />
+    <ProjectReference Include="..\OrderKit.Domain\OrderKit.Domain.csproj" />
   </ItemGroup>
 
 </Project>
