@@ -53,7 +53,7 @@ namespace OrderKit
             }
         }
 
-        public int CounterValue(int index) => _counters[index];
+        public int CounterValue(int index) => CounterAt(index);
 
         /// <summary>A USING DECLARATION: no block, disposal at end of scope.</summary>
         public string Dump()

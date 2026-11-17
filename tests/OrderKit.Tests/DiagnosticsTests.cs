@@ -33,6 +33,13 @@ namespace OrderKit.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new Diagnostics().CounterAt(index));
         }
 
+        [TestCase(-1)]
+        [TestCase(4)]
+        public void CounterValueRejectsOutOfRange(int index)
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new Diagnostics().CounterValue(index));
+        }
+
         [Test]
         public void BumpsMoveTheRightCounters()
         {
