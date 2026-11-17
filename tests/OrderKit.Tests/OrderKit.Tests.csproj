@@ -4,12 +4,18 @@
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>OrderKit.Tests</AssemblyName>
     <RootNamespace>OrderKit.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
     <!-- LangVersion is deliberately NOT set. It defaults from the TargetFramework,
          which is what makes the family axis one number instead of two. -->
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="NUnit" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="coverlet.collector" PrivateAssets="all" />
+    <PackageReference Include="coverlet.msbuild" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="Microsoft.AspNet.Mvc" />
