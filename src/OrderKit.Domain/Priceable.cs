@@ -90,7 +90,8 @@ public static class PriceableHelper
     public static string Describe(IPriceable item) =>
         item == null ? "<none>" : $"{item.PricingKey()}={item.BaseCents()}";
 
-    public static string QualifiedKey(IPriceable item) => KeyPrefix + item.PricingKey();
+    public static string QualifiedKey(IPriceable item) =>
+        KeyPrefix + (item ?? throw new ArgumentNullException(nameof(item))).PricingKey();
 
     public static long WeightOf(object candidate)
     {

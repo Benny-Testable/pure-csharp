@@ -80,6 +80,7 @@ namespace OrderKit.Tests
             Assert.AreEqual("<none>", PriceableHelper.Describe(null));
             Assert.AreEqual("order:PR-1=2500", PriceableHelper.Describe(o));
             Assert.AreEqual("orderkit://quote/order:PR-1", PriceableHelper.QualifiedKey(o));
+            Assert.AreEqual("item", Assert.Throws<ArgumentNullException>(() => PriceableHelper.QualifiedKey(null)).ParamName);
             Assert.AreEqual("Priced", PriceableHelper.NameOfStatus(OrderStatus.Priced));
         }
 
