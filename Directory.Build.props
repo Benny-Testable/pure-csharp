@@ -8,6 +8,8 @@
     <!-- Every project keeps its own Properties/AssemblyInfo.cs; without this the SDK
          generates the same attributes a second time (CS0579). -->
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <!-- packages.lock.json per project: the resolved graph for dependency metrics. -->
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <!-- versions live in Directory.Packages.props -->
   </PropertyGroup>
 
