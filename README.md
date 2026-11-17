@@ -45,7 +45,8 @@ csc -langversion:11.0   ->  error CS8025: Feature 'async function' is not availa
 
 ## Supported tools
 
-6 of the 19 tools in the roster are expected to fire on this branch. The rest exit
+11 of the 19 tools in the roster are expected to fire on this branch (on a host that
+reaches NuGet; see `dataset.json` `expectations.expectationsAssume`). The rest exit
 3 (cannot run here) or 4 (absent from this host), each with its reason in both
 its runner (`ToolRunner/Tools/`) and `trigger.json`.
 
@@ -73,12 +74,12 @@ never ran" - so the source-level tools below are the built-in negative control:
 | Roslyn analyzers (cognitive complexity) | not-installed | The sheet says 'Roslyn', which is a compiler platform, not a package. Resolved here to S |
 | Roslyn SAST analyzers | not-installed | The sheet says 'roslyn sast', also not a package. Resolved here to SecurityCodeScan + Mi |
 | Roslyn SemanticModel.AnalyzeDataFlow | not-installed | PROPOSED REPAIR, not in the source sheet. The sheet assigns Data Flow to Stryker.NET, a  |
-| dotnet list package --vulnerable | not-installed | This branch is SDK-style with PackageReference under Central Package Management, so `dot |
-| Coverlet | skipped | net8.0 is fully supported; nothing about this target framework excludes Coverlet. It ins |
-| AltCover | skipped | net8.0 is supported. AltCover rewrites compiled assemblies to record visits, and OrderKi |
-| MiniCover | skipped | MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0), so th |
-| Stryker.NET | skipped | Stryker.NET supports this SDK-style net8.0 solution. It mutates and rebuilds the code un |
-| OpenTelemetry (.NET) + OTLP exporter | skipped | net8.0 is supported. Spans come from a running, compiled app with the OpenTelemetry SDK  |
+| dotnet list package --vulnerable | active | This branch is SDK-style with PackageReference under Central Package Management, so `dot |
+| Coverlet | active | net8.0 is fully supported. The solution builds and its tests pass, so Coverlet instrumen |
+| AltCover | active | net8.0 is supported. AltCover instruments the built assemblies, runs the tests against t |
+| MiniCover | active | MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0). It in |
+| Stryker.NET | active | Stryker.NET supports this SDK-style net8.0 solution. It runs in solution mode (the test  |
+| OpenTelemetry (.NET) + OTLP exporter | skipped | net8.0 is supported and the solution builds, but no project references the OpenTelemetry |
 | unilyze | active | Real tool (github.com/bigdra50/unilyze, MIT, v0.6.1) -- not absent. Verified: live cyclomatic/cognitive comp |
 ## Build
 
@@ -93,11 +94,14 @@ Restore will not succeed on a host where NuGet is unreachable; see `dataset.json
 ## Test
 
 ```text
-msbuild OrderKit.sln /t:Build /p:Configuration=Release   # the test step is wired into the build
+dotnet test OrderKit.sln
 ```
 
-19 tests are declared. They are **not** executed in this corpus's build, because no
-test framework can be restored.
+141 NUnit tests, all passing. Coverage:
+
+```text
+dotnet test OrderKit.sln --collect:"XPlat Code Coverage"
+```
 
 ## Tool data folders
 

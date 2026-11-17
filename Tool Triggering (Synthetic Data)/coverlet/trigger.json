@@ -2,13 +2,13 @@
   "tool": "Coverlet",
   "slug": "coverlet",
   "kind": "sdk",
-  "status": "skipped",
+  "status": "active",
   "target_framework": "net8.0",
   "language_version": "12.0",
   "runner": "ToolRunner/Tools/Coverlet.cs",
   "expects": {
-    "exit_code": 3,
-    "reason": "net8.0 is fully supported; nothing about this target framework excludes Coverlet. It instruments the compiled test assemblies, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist."
+    "exit_code": 0,
+    "reason": "net8.0 is fully supported. The solution builds and its tests pass, so Coverlet instruments the test run and reports statement and branch coverage. It comes from NuGet; where NuGet is refused it exits 4 instead."
   },
   "metrics": {
     "primary_for": 18,

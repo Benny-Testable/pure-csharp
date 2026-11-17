@@ -2,13 +2,13 @@
   "tool": "MiniCover",
   "slug": "minicover",
   "kind": "sdk",
-  "status": "skipped",
+  "status": "active",
   "target_framework": "net8.0",
   "language_version": "12.0",
   "runner": "ToolRunner/Tools/MiniCover.cs",
   "expects": {
-    "exit_code": 3,
-    "reason": "MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0), so the target framework does not exclude it. It instruments a build and runs the test suite, and OrderKit.sln does not compile on this branch: its projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated assembly attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference ..\\..\\OrderKit.* projects that do not exist."
+    "exit_code": 0,
+    "reason": "MiniCover 3.10.0 supports the .NET 8 SDK this branch uses (net10.0;net9.0;net8.0). It instruments the Debug test build, runs the test suite and reports statement hits. It comes from NuGet; where NuGet is refused it exits 4 instead."
   },
   "metrics": {
     "primary_for": 0,
