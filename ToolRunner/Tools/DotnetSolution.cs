@@ -129,9 +129,12 @@ public static class DotnetSolution
             }
 
             var info = Path.Combine(dir, "Properties", "AssemblyInfo.cs");
-            var generates = !xml.Descendants("GenerateAssemblyInfo")
-                .Any(e => string.Equals(e.Value.Trim(), "false", StringComparison.OrdinalIgnoreCase));
-            if (generates && File.Exists(info) && File.ReadAllText(info).Contains("[assembly: AssemblyVersion", StringComparison.Ordinal))
+            if (!GeneratesAssemblyInfo(xml, dir, repoRoot) && File.Exists(info))
+            {
+                continue;
+            }
+
+            if (File.Exists(info) && File.ReadAllText(info).Contains("[assembly: AssemblyVersion", StringComparison.Ordinal))
             {
                 duplicateInfo.Add(name);
             }
@@ -144,6 +147,45 @@ public static class DotnetSolution
         }
 
         return problems;
+    }
+
+    /// <summary>
+    /// Whether the SDK will generate assembly attributes for a project. The switch
+    /// can sit in the project file itself or in the Directory.Build.props MSBuild
+    /// imports for it -- the NEAREST one at or above the project's folder (only the
+    /// first found is imported). A setting in the project file wins, since it is
+    /// evaluated after the imported props.
+    /// </summary>
+    private static bool GeneratesAssemblyInfo(XDocument project, string projectDir, string repoRoot)
+    {
+        static bool? Setting(XDocument doc)
+        {
+            var last = doc.Descendants("GenerateAssemblyInfo").LastOrDefault();
+            return last is null ? null : !string.Equals(last.Value.Trim(), "false", StringComparison.OrdinalIgnoreCase);
+        }
+
+        if (Setting(project) is { } own)
+        {
+            return own;
+        }
+
+        var root = Path.GetFullPath(repoRoot);
+        for (var dir = new DirectoryInfo(projectDir); dir is not null; dir = dir.Parent)
+        {
+            var props = Path.Combine(dir.FullName, "Directory.Build.props");
+            if (File.Exists(props))
+            {
+                return Setting(XDocument.Load(props)) ?? true;
+            }
+
+            if (string.Equals(dir.FullName.TrimEnd(Path.DirectorySeparatorChar), root.TrimEnd(Path.DirectorySeparatorChar),
+                              StringComparison.OrdinalIgnoreCase))
+            {
+                break;
+            }
+        }
+
+        return true;
     }
 }
 

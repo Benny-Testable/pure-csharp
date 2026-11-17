@@ -6,10 +6,8 @@ namespace ToolRunner.Tools;
 /// <summary>
 /// Coverlet. net8.0 is fully supported; nothing about this target framework excludes
 /// it. Coverlet instruments the compiled test assemblies, so it runs only when
-/// OrderKit.sln builds (see <see cref="DotnetSolution"/>). On this branch it does not:
-/// the projects ship Properties/AssemblyInfo.cs files that duplicate the SDK-generated
-/// attributes (CS0579), and OrderKit.Tests and OrderKit.Contracts reference
-/// ..\..\OrderKit.* projects that do not exist. That is exit 3. Coverlet itself also comes from NuGet.
+/// OrderKit.sln builds and its tests pass (see <see cref="DotnetSolution"/>). Coverlet
+/// itself comes from NuGet; where NuGet is unreachable this is exit 4.
 /// </summary>
 public sealed class Coverlet : ITool
 {

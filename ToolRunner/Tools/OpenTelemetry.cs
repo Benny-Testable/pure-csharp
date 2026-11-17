@@ -3,9 +3,8 @@ namespace ToolRunner.Tools;
 /// <summary>
 /// OpenTelemetry (.NET) + OTLP exporter. net8.0 is supported. Spans come from a
 /// RUNNING, compiled application with the OpenTelemetry SDK wired in, so this runs
-/// only when OrderKit.sln builds (see <see cref="DotnetSolution"/>) -- it does not on
-/// this branch -- and some project references OpenTelemetry, which none does. That is
-/// exit 3. Note separately that tracing is not path coverage. The TypeScript corpus
+/// only when OrderKit.sln builds (see <see cref="DotnetSolution"/>) and some project
+/// references OpenTelemetry. The solution builds, but no project references it: exit 3. Note separately that tracing is not path coverage. The TypeScript corpus
 /// shipped an OTel bootstrap that registered a no-op processor, exported nothing and
 /// exited 0 -- a structurally zero result.
 /// </summary>
