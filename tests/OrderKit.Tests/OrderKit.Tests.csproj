@@ -15,8 +15,11 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="coverlet.collector" PrivateAssets="all" />
-    <PackageReference Include="coverlet.msbuild" PrivateAssets="all" />
-    <PackageReference Include="Newtonsoft.Json" />
+    <!-- Microsoft.NET.Test.Sdk 17.x runs its test host on Newtonsoft.Json >= 13.0.1
+         and crashes on the planted 9.0.1 (JsonDataSerializer type initializer), so
+         the TEST project alone overrides it. The production projects keep the
+         planted 9.0.1 pin from Directory.Packages.props. -->
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.1" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="Microsoft.AspNet.Mvc" />
     <PackageReference Include="System.Text.RegularExpressions" />
