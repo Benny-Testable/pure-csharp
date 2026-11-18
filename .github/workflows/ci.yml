@@ -1,0 +1,62 @@
+# CI for CS_VNET8_SDKMSBUILD_CPM_MICRO: build, test with coverage, audit, run the tool roster.
+#
+# A tool that cannot run here exits 3 or 4, and that is expected -- the roster run
+# compares every exit code with dataset.json and exits 2 only for an unrecorded one.
+name: CS_VNET8_SDKMSBUILD_CPM_MICRO
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # PyDriller, git-churn and unilyze hotspot need real history
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore OrderKit.sln
+
+      - name: Build
+        run: dotnet build OrderKit.sln -c Release --no-restore
+
+      - name: Test with coverage
+        run: dotnet test OrderKit.sln --collect:"XPlat Code Coverage" --results-directory reports/tests
+
+      - name: Cross-file consistency audit
+        run: dotnet run --project ToolRunner -- --check
+
+      - name: Verify tool wiring
+        run: dotnet run --project ToolRunner -- --verify
+
+      - name: Run every wired tool
+        continue-on-error: true
+        run: dotnet run --project ToolRunner -- --run
+
+      - name: Write CI results index
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p reports
+          {
+            echo '{'
+            echo '  "branch": "CS_VNET8_SDKMSBUILD_CPM_MICRO",'
+            echo '  "reports": ['
+            find reports -type f ! -name cicd_results_index.json -printf '    {"path": "%p", "bytes": %s}\n' | sort | sed '$!s/$/,/'
+            echo '  ]'
+            echo '}'
+          } > reports/cicd_results_index.json
+          cat reports/cicd_results_index.json | head -20
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reports-CS_VNET8_SDKMSBUILD_CPM_MICRO
+          path: reports/
