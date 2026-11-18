@@ -1,0 +1,14 @@
+# Substrings excluded from git-churn file lists (case-insensitive path match).
+# Stops tool corpora and harness history from flooding Code Churn and
+# Test Case Maintenance evidence; the OrderKit domain and tests stay in scope.
+Tool Triggering
+Tool Clean
+Tool Invalid
+tool github test data
+tool clean (synthetic
+tool invalid (synthetic
+/ToolRunner/
+ToolRunner/
+/reports/
+/TestResults/
+packages.lock.json

@@ -1,0 +1,2 @@
+# Limit def-use / data-flow finding drill-down to the planted analysis fixtures.
+src/OrderKit.Analysis

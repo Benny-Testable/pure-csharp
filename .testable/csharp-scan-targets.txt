@@ -1,0 +1,4 @@
+# Narrow SAST/lint scan roots for taxonomy evidence (the full solution is unchanged
+# on disk). C# counterpart of the Python corpus's python-scan-targets.txt.
+src/OrderKit.Analysis
+src/Services/OrderKit.Reporting
