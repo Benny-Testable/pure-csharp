@@ -32,6 +32,7 @@
     <ProjectReference Include="..\..\src\Services\OrderKit.Pricing\OrderKit.Pricing.csproj" />
     <ProjectReference Include="..\..\src\Services\OrderKit.Risk\OrderKit.Risk.csproj" />
     <ProjectReference Include="..\..\src\Services\OrderKit.Reporting\OrderKit.Reporting.csproj" />
+    <ProjectReference Include="..\..\src\OrderKit.Analysis\OrderKit.Analysis.csproj" />
   </ItemGroup>
 
 </Project>

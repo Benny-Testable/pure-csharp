@@ -1,4 +1,4 @@
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderKit.Domain", "src\OrderKit.Domain\OrderKit.Domain.csproj", "{04F85DEF-749D-547D-B999-6E36B341B85F}"
 EndProject
@@ -11,6 +11,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderKit.Reporting", "src\Services\OrderKit.Reporting\OrderKit.Reporting.csproj", "{33E17DE9-52AC-14AD-7145-D7A9773335D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderKit.Tests", "tests\OrderKit.Tests\OrderKit.Tests.csproj", "{D7993E2A-0038-2F0F-26BD-E136606FE576}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC9F7F54-0245-4FD8-A50B-708F783C5157}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderKit.Analysis", "src\OrderKit.Analysis\OrderKit.Analysis.csproj", "{2D19A74E-06A4-49A9-AA05-960EF3611E6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,5 +46,12 @@ Global
 		{D7993E2A-0038-2F0F-26BD-E136606FE576}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7993E2A-0038-2F0F-26BD-E136606FE576}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7993E2A-0038-2F0F-26BD-E136606FE576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D19A74E-06A4-49A9-AA05-960EF3611E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D19A74E-06A4-49A9-AA05-960EF3611E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D19A74E-06A4-49A9-AA05-960EF3611E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D19A74E-06A4-49A9-AA05-960EF3611E6E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2D19A74E-06A4-49A9-AA05-960EF3611E6E} = {BC9F7F54-0245-4FD8-A50B-708F783C5157}
 	EndGlobalSection
 EndGlobal

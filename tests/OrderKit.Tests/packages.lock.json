@@ -671,6 +671,9 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "orderkit.analysis": {
+        "type": "Project"
+      },
       "orderkit.contracts": {
         "type": "Project",
         "dependencies": {
