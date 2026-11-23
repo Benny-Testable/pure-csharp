@@ -1,9 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <!-- The one production .NET project of this branch. The former Domain, Contracts,
+       Pricing, Risk, Reporting and Analysis projects are folders of this project
+       now (same sources, same namespaces, same paths), so a scan or a restore sees
+       one project instead of six. OrderKit.Tests is the only other project. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>OrderKit.Risk</AssemblyName>
-    <RootNamespace>OrderKit.Risk</RootNamespace>
+    <AssemblyName>OrderKit</AssemblyName>
+    <RootNamespace>OrderKit</RootNamespace>
     <!-- LangVersion is deliberately NOT set. It defaults from the TargetFramework,
          which is what makes the family axis one number instead of two. -->
   </PropertyGroup>
@@ -14,10 +18,6 @@
     <PackageReference Include="Microsoft.AspNet.Mvc" />
     <PackageReference Include="System.Text.RegularExpressions" />
     <PackageReference Include="BouncyCastle" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\OrderKit.Domain\OrderKit.Domain.csproj" />
   </ItemGroup>
 
 </Project>

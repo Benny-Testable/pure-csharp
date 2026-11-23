@@ -17,11 +17,14 @@ execution is not part of the build, and evaluation happens later.
 
 Projects:
 
-- `OrderKit.Domain` (`src/OrderKit.Domain`)
-- `OrderKit.Contracts` (`src/OrderKit.Contracts`)
-- `OrderKit.Pricing` (`src/Services/OrderKit.Pricing`)
-- `OrderKit.Risk` (`src/Services/OrderKit.Risk`)
-- `OrderKit.Reporting` (`src/Services/OrderKit.Reporting`)
+- `OrderKit` (`src/OrderKit.csproj`) - the single production project. The former
+  Domain, Contracts, Pricing, Risk, Reporting and Analysis projects are folders
+  of it (`src/OrderKit.Domain`, `src/OrderKit.Contracts`, `src/Services/...`,
+  `src/OrderKit.Analysis`), with unchanged sources and namespaces.
+- `OrderKit.Tests` (`tests/OrderKit.Tests`) - the test project.
+
+One production project keeps restore, build and every .NET tool task to a single
+pass instead of six.
 
 ## Target framework
 

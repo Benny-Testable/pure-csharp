@@ -10,8 +10,8 @@ namespace ToolRunner.Tools;
 /// unreachable this is exit 4. Also: the sheet makes it primary for 16 Data Flow
 /// metrics, which it cannot compute -- see roslyn-dataflow.
 ///
-/// It runs in solution mode: the test project references five production projects,
-/// and project mode would make Stryker refuse to choose one.
+/// It runs in solution mode: the test project references the single production project, OrderKit,
+/// and solution mode is kept so the run stays pinned to OrderKit.sln.
 /// </summary>
 public sealed class Stryker : ITool
 {
