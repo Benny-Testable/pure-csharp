@@ -12,8 +12,9 @@ None of these files is part of `OrderKit.sln`, so the build and tests are unaffe
 | `cloudformation/orderkit-aws.yaml` | AWS CloudFormation | S3 bucket public-read with no public-access block, no encryption, no versioning or logging; security group open to `0.0.0.0/0` on 22 and 3389 with all egress; RDS publicly accessible, unencrypted, no backups or deletion protection; unencrypted EBS volume; IAM policy `Action: "*"` on `Resource: "*"` attached to a role any AWS principal may assume |
 | `kubernetes/orderkit-api.yaml` | Kubernetes | privileged container running as root with privilege escalation, added capabilities, host network and host PID, `:latest` image, no resource limits; LoadBalancer service open to `0.0.0.0/0`; default service account bound to `cluster-admin`; ClusterRole with `*` on every API group, resource and verb |
 | `arm/orderkit-azure.json` | Azure ARM | storage account allowing HTTP, public blob access, TLS 1.0 and default-allow network rules; blob container with public access; NSG allowing RDP and SSH from the internet; SQL server with public network access, TLS 1.0 and a firewall rule for every IP |
+| `terraform/orderkit-aws.tf` | Terraform (AWS) | security group open to `0.0.0.0/0` and `::/0` on 22, 3389 and all ports; allow-all NACL rule; S3 bucket `public-read-write` with public access block off and a `Principal: "*"` policy, no encryption; unencrypted EBS, EC2 root volume, SQS and SNS; public, unencrypted RDS with no backups; EC2 with public IP and IMDSv1; internet-facing ALB on plain HTTP; IAM `Action: "*"` policy; CloudTrail without log validation; KMS key without rotation; weak account password policy |
 
-Verified with checkov (CloudFormation, Kubernetes and ARM frameworks) and
+Verified with checkov (CloudFormation, Kubernetes, ARM and Terraform frameworks), tfsec (Terraform) and
 `trivy config`: each file is detected and fails the checks above.
 
 | Report classification | Evidence here |
