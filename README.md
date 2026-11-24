@@ -15,13 +15,17 @@ execution is not part of the build, and evaluation happens later.
 | Package manager | Central Package Management |
 | Architecture | Microservices |
 
-Projects:
+Projects (2 `.csproj` in total, so a platform run restores, builds and scans two projects):
 
 - `OrderKit` (`src/OrderKit.csproj`) - the single production project. The former
   Domain, Contracts, Pricing, Risk, Reporting and Analysis projects are folders
   of it (`src/OrderKit.Domain`, `src/OrderKit.Contracts`, `src/Services/...`,
   `src/OrderKit.Analysis`), with unchanged sources and namespaces.
-- `OrderKit.Tests` (`tests/OrderKit.Tests`) - the test project.
+- `OrderKit.Tests` (`tests/OrderKit.Tests`) - the single test project. References
+  `OrderKit`.
+
+Every former project's `Properties/AssemblyInfo.cs` stays on disk. Only the Domain
+one compiles; the other four are excluded with `Compile Remove` (otherwise CS0579).
 
 One production project keeps restore, build and every .NET tool task to a single
 pass instead of six.
@@ -51,7 +55,7 @@ csc -langversion:11.0   ->  error CS8025: Feature 'async function' is not availa
 11 of the 19 tools in the roster are expected to fire on this branch (on a host that
 reaches NuGet; see `dataset.json` `expectations.expectationsAssume`). The rest exit
 3 (cannot run here) or 4 (absent from this host), each with its reason in both
-its runner (`ToolRunner/Tools/`) and `trigger.json`.
+its runner (`ToolRunner/Tools/` in `pure-csharp-toolrunner`) and `trigger.json`.
 
 **A tool that does not fire is a result, not a failure.** What a family with *no*
 firing tools cannot do is distinguish "correctly detected nothing" from "the scan
@@ -122,10 +126,14 @@ whole roster against it.
 ## Tool entry points
 
 The harness is the C# console project `ToolRunner/` (one runner per tool under
-`ToolRunner/Tools/`). It is kept out of `OrderKit.sln` and out of the tool data
-folder, so it is neither built with the corpus nor detected as part of it.
+`ToolRunner/Tools/`). It lives in **its own repository**
+(`VISVANTHA/pure-csharp-toolrunner`), not in this one. That keeps its `.csproj`
+out of the platform's scan of this repo, so this repo has 2 projects, not 3.
+The `runner` paths in each `trigger.json` are relative to that repository.
+Point it at a checkout of this repo with `REPO_ROOT`:
 
 ```text
+export REPO_ROOT=/path/to/pure-csharp
 dotnet run --project ToolRunner                     # banner
 dotnet run --project ToolRunner -- --verify         # every runner present
 dotnet run --project ToolRunner -- --run            # run them all, compare to dataset.json

@@ -3,7 +3,8 @@
   <!-- The one production .NET project of this branch. The former Domain, Contracts,
        Pricing, Risk, Reporting and Analysis projects are folders of this project
        now (same sources, same namespaces, same paths), so a scan or a restore sees
-       one project instead of six. OrderKit.Tests is the only other project. -->
+       one project instead of six. OrderKit.Tests is the only other project, and the
+       repository holds exactly these two .csproj files. -->
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <AssemblyName>OrderKit</AssemblyName>
@@ -11,6 +12,18 @@
     <!-- LangVersion is deliberately NOT set. It defaults from the TargetFramework,
          which is what makes the family axis one number instead of two. -->
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Every former project keeps its Properties/AssemblyInfo.cs on disk. Only the
+         Domain one compiles; the other four would declare the same assembly
+         attributes again (CS0579). -->
+    <Compile Remove="OrderKit.Contracts/Properties/AssemblyInfo.cs" />
+    <Compile Remove="Services/OrderKit.Pricing/Properties/AssemblyInfo.cs" />
+    <Compile Remove="Services/OrderKit.Risk/Properties/AssemblyInfo.cs" />
+    <Compile Remove="Services/OrderKit.Reporting/Properties/AssemblyInfo.cs" />
+    <!-- Build output left in a former project's folder must never be compiled in. -->
+    <Compile Remove="**/bin/**;**/obj/**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" />
