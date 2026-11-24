@@ -1,0 +1,20 @@
+# Lint / Rule Violations: Configuration File Handling and Custom Rule Validation.
+# Folder-scoped, so the rest of OrderKit keeps its existing lint baseline.
+[*.cs]
+# Project-specific enforcement: raise these rules to warning for this folder only.
+dotnet_diagnostic.CA1051.severity = warning
+dotnet_diagnostic.CA1707.severity = warning
+dotnet_diagnostic.CA1822.severity = warning
+dotnet_diagnostic.IDE0051.severity = warning
+dotnet_diagnostic.IDE0059.severity = warning
+dotnet_diagnostic.IDE0060.severity = warning
+dotnet_diagnostic.IDE0044.severity = warning
+dotnet_diagnostic.IDE0003.severity = warning
+
+# Custom naming rule: public members must be PascalCase.
+dotnet_naming_rule.public_members_pascal.symbols = public_members
+dotnet_naming_rule.public_members_pascal.style = pascal_style
+dotnet_naming_rule.public_members_pascal.severity = warning
+dotnet_naming_symbols.public_members.applicable_kinds = method, field, property
+dotnet_naming_symbols.public_members.applicable_accessibilities = public
+dotnet_naming_style.pascal_style.capitalization = pascal_case
