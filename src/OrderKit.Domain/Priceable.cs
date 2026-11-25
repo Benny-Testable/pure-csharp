@@ -35,6 +35,16 @@ public record struct PriceKey(string Tenant, string Sku)
     public string Combined => $"{Tenant}/{Sku}";
 }
 
+/// <summary>A bulk-purchase rule: Percent off one category once at least
+/// ThresholdUnits of it are on the order. Percent is capped at 30.</summary>
+public record BulkRule(string Category, int ThresholdUnits, int Percent)
+{
+    public const int MaxPercent = 30;
+
+    public bool IsValid =>
+        !string.IsNullOrEmpty(Category) && ThresholdUnits > 0 && Percent is >= 0 and <= MaxPercent;
+}
+
 public record PriceQuote(string Key, long Cents)
 {
     public string Region { get; init; } = "domestic";

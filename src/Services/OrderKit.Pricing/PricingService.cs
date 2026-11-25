@@ -99,6 +99,28 @@ namespace OrderKit
             return total;
         }
 
+        /// <summary>
+        /// Cents off for buying one category in bulk: the rule's percent of that
+        /// category's subtotal once its units reach the threshold, otherwise 0.
+        /// </summary>
+        public long BulkDiscountCents(Order order, BulkRule rule)
+        {
+            ArgumentNullException.ThrowIfNull(order);
+            ArgumentNullException.ThrowIfNull(rule);
+            if (!rule.IsValid) throw new ArgumentException("invalid bulk rule", nameof(rule));
+            if (order.UnitsInCategory(rule.Category) < rule.ThresholdUnits) return 0L;
+            return order.CategorySubtotalCents(rule.Category) * rule.Percent / 100L;
+        }
+
+        /// <summary>PriceCents with the bulk discount taken off, never below zero.</summary>
+        public long PriceWithBulkDiscount(
+            Order order, string region, bool expedited, int loyaltyYears, BulkRule rule)
+        {
+            long discount = BulkDiscountCents(order, rule);
+            long price = PriceCents(order, region, expedited, loyaltyYears);
+            return price > discount ? price - discount : 0L;
+        }
+
         /// <summary>`in` parameters: read-only references, no defensive copy.</summary>
         public static long Combine(in long a, in long b) => a + b;
 

@@ -96,6 +96,14 @@ public sealed class Order : IPriceable
 
     public long BaseCents() => SubtotalCents();
 
+    /// <summary>Units ordered in one category; 0 when the order has none.</summary>
+    public int UnitsInCategory(string category) =>
+        _lines.Where(l => l.Category == category).Sum(l => l.Quantity);
+
+    /// <summary>Extended cents of the lines in one category; 0 when none.</summary>
+    public long CategorySubtotalCents(string category) =>
+        _lines.Where(l => l.Category == category).Sum(l => l.ExtendedCents());
+
     public string PricingKey() => $"order:{Id}";
 
     public override string ToString() =>
