@@ -151,3 +151,4 @@ does not already record - a new finding, as distinct from a measurement.
 
 <!-- dummy PR 2026-11-17 09:24:07 -->
 <!-- dummy PR 2026-11-24 18:36:50 -->
+<!-- dummy commit 2026-11-25 11:44:40 -->
